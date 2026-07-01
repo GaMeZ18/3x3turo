@@ -1,0 +1,49 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Lectura pública (sin login) para toda la información del torneo.
+    // Escritura solo permitida al administrador autenticado con
+    // Firebase Authentication (Email/Password).
+    match /categories/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /teams/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /groups/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /matches/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /brackets/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /mvps/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /meta/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Cualquier otra colección: denegado por defecto.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
